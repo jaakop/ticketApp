@@ -4,10 +4,12 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const keypress = require('keypress');
 
+const config = require('./Config.json');
+
 const app = express();
-const port = 3000;
-//const hostname = '172.19.144.204';
-const hostname = 'localhost';
+const port = config.port;
+//const hostname = '';
+const hostname = config.host;
 
 var people = [];
 
