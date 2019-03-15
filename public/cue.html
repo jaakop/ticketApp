@@ -20,7 +20,7 @@
         if (this.readyState == 4 && this.status == 200) {
           if (this.responseText == "redirect") {
             window.location.reload();
-            alert("A admin has seen your ticket and is coming to help!");
+            alert("An admin has seen your ticket and is coming to help!");
 
           } else {
             document.getElementById("cue").innerHTML = this.responseText;
