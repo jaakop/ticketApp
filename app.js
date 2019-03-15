@@ -73,7 +73,10 @@ app.listen(port, hostname, () => {
         } else {
             console.log("Nobody needs your help :c");
         }
-
+        
+        if (key.name == "c" && key.ctrl == true) {
+            process.exit(0);
+        }
     });
 
     process.stdin.setRawMode(true);
