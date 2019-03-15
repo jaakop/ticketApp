@@ -1,8 +1,10 @@
 const express = require('express');
-var cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const path = require('path');
 const keypress = require('keypress');
+
+const config = require('./Config.json');
 
 const app = express();
 const port = 3000;
@@ -46,7 +48,6 @@ app.post('/', (req, res) => {
         people.push(req.body.name);
         res.cookie('ree', req.body.name);
     }
-
     res.redirect('./');
 });
 
@@ -70,8 +71,9 @@ app.listen(port, hostname, () => {
     keypress(process.stdin);
 
     process.stdin.on('keypress', function (ch, key) {
-        if(key && key.name == 'e')
+        if (key.name == "c" && key.ctrl == true) {
             process.exit(0);
+        }
         if (people.length > 0) {
             console.log(people.shift() + " needs help!");
         } else {
