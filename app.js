@@ -38,12 +38,12 @@ app.get('/', (req, res) => {
     }
 });
 
-app.get('/admin', (req,res) => {
+app.get('/admin', (req, res) => {
     res.sendFile(path.join(__dirname + "/public/admin.html"));
 });
 
 app.get('/public/:item', (req, res) => {
-res.sendFile(__dirname + "/public/" + req.params.item);
+    res.sendFile(__dirname + "/public/" + req.params.item);
 });
 
 app.post('/', (req, res) => {
@@ -66,20 +66,20 @@ app.post('/cue', (req, res) => {
     }
     if (response > 0)
         res.send(response.toString());
-    else{
+    else {
         res.clearCookie("ree");
         res.send("redirect");
     }
 });
 
 app.post('/admin', (req, res) => {
-    if(people.length > 0)
-    res.send(people.shift());
+    if (people.length > 0)
+        res.send(people.shift());
     else
-    res.send("No tickets found");
+        res.send("No tickets found");
 });
 
-app.post('/getQueLenght', (req,res) => {
+app.post('/getQueLenght', (req, res) => {
     res.send("" + people.length);
 });
 
