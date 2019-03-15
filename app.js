@@ -17,8 +17,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-app.use('/', require('./routes/index'));
-app.use('/admin', require('./routes/admin'));
+app.use('/', require('./routers/index'));
+app.use('/admin', require('./routers/admin'));
 
 
 app.get('/public/:item', (req, res) => {
