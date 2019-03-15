@@ -7,13 +7,13 @@ const keypress = require('keypress');
 const config = require('./Config.json');
 
 const app = express();
-const port = config.port;
-//const hostname = '';
-const hostname = config.host;
+const port = 3000;
+//const hostname = '172.19.144.204';
+const hostname = 'localhost';
 
 var people = [];
 
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
@@ -23,17 +23,22 @@ app.get('/', (req, res) => {
         var iscookie = false;
         for (var i = 0; i < people.length; i++) {
             if (cookies == people[i]) {
-                res.sendFile(__dirname + "/cue.html");
+                res.sendFile(__dirname + "/public/cue.html");
                 iscookie = true;
                 break;
             }
+        }
+        if (!iscookie) {
+            res.sendFile(path.join(__dirname + '/public/index.html'));
+        }
     }
-    if (!iscookie) {
-        res.sendFile(path.join(__dirname + '/index.html'));
+    else {
+        res.sendFile(path.join(__dirname + '/public/index.html'));
     }
-    } else {
-        res.sendFile(path.join(__dirname + '/index.html'));
-    }
+});
+
+app.get('/public/:item', (req, res) => {
+res.sendFile(__dirname + "/public/" + req.params.item);
 });
 
 app.post('/', (req, res) => {
@@ -54,12 +59,10 @@ app.post('/cue', (req, res) => {
             break;
         }
     }
-    if (response > 0) {
+    if (response > 0)
         res.send(response.toString());
-    }
-    else{
-        res.redirect('./');
-    }
+    else
+        res.send("redirect");
 });
 
 app.listen(port, hostname, () => {

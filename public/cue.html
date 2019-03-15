@@ -4,20 +4,22 @@
 <head>
   <meta charset="utf-8">
   <title>Page</title>
+  <link rel="stylesheet" href="/public/mainstyle.css">
 </head>
 
 <body>
   <p>Your place in the cue is <span id="cue"></span></p>
   <script>
     var cokie = getCookie("ree");
+    getCueNumber();
     var loop = setInterval(getCueNumber, 500);
 
     function getCueNumber() {
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-          if (this.responseText == "0") {
-            clearInterval(loop);
+          if (this.responseText == "redirect") {
+            window.location.reload();
 
           } else {
             document.getElementById("cue").innerHTML = this.responseText;
@@ -45,6 +47,7 @@
       }
       return "";
     }
+
   </script>
 </body>
 
