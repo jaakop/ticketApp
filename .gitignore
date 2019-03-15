@@ -77,3 +77,6 @@ typings/
 
 # Visual Studio code Launch options
 .vscode
+
+#mysql Data
+mysql.json
