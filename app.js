@@ -43,18 +43,21 @@ app.post('/', (req, res) => {
             res.cookie('ree', req.body.name);
     }
     
-            res.redirect('/');
+            res.redirect('./');
 });
 
 app.post('/cue', (req,res) => {
 var response = 0;
     for(var i = 0; i < people.length; i++){
         if(req.body.name == people[i]){
-            response = i;
+            response = i+1;
             break;
         }
     }
+    if(response > 0)
     res.send(response.toString());
+    else
+    res.redirect('./');
 });
 
 app.listen(port, hostname, () => {
