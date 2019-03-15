@@ -74,7 +74,7 @@ app.listen(port, hostname, () => {
     keypress(process.stdin);
 
     process.stdin.on('keypress', function (ch, key) {
-        if (key.name == "c" && key.ctrl == true) {
+        if (key && key.name == "c" && key.ctrl == true) {
             process.exit(0);
         }
         if (people.length > 0) {
