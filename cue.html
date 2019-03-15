@@ -1,49 +1,53 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="utf-8">
-    <title>Page</title>
+  <meta charset="utf-8">
+  <title>Page</title>
 </head>
+
 <body>
-    <p>Your place in the cue is <span id="cue"></span></p>
-    <script>
+  <p>Your place in the cue is <span id="cue"></span></p>
+  <script>
     var cokie = getCookie("ree");
+    getCueNumber();
     var loop = setInterval(getCueNumber, 500);
 
     function getCueNumber() {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-         if( this.responseText == "0"){
-          clearInterval(loop);
+          if (this.responseText == "redirect") {
+            window.location.reload();
 
-         }else{
+          } else {
             document.getElementById("cue").innerHTML = this.responseText;
-         }
+          }
         }
-    };
-    xhttp.open("POST", "cue", true);
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send("name="+cokie);
-    
+      };
+      xhttp.open("POST", "cue", true);
+      xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      xhttp.send("name=" + cokie);
+
     }
 
     function getCookie(cname) {
-  var name = cname + "=";
-  var decodedCookie = decodeURIComponent(document.cookie);
-  var ca = decodedCookie.split(';');
-  for(var i = 0; i <ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
+      var name = cname + "=";
+      var decodedCookie = decodeURIComponent(document.cookie);
+      var ca = decodedCookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
     }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
-  }
-  return "";
-}
 
-    </script>
+  </script>
 </body>
+
 </html>
