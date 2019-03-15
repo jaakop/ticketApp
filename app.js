@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
         var iscookie = false;
         for (var i = 0; i < people.length; i++) {
             if (cookies == people[i]) {
-                res.sendFile(__dirname + "/public/cue.html");
+                res.sendFile(path.join(__dirname + "/public/cue.html"));
                 iscookie = true;
                 break;
             }
@@ -36,6 +36,10 @@ app.get('/', (req, res) => {
     else {
         res.sendFile(path.join(__dirname + '/public/index.html'));
     }
+});
+
+app.get('/admin', (req,res) => {
+    res.sendFile(path.join(__dirname + "/public/admin.html"));
 });
 
 app.get('/public/:item', (req, res) => {
@@ -66,6 +70,17 @@ app.post('/cue', (req, res) => {
         res.clearCookie("ree");
         res.send("redirect");
     }
+});
+
+app.post('/admin', (req, res) => {
+    if(people.length > 0)
+    res.send(people.shift());
+    else
+    res.send("No tickets found");
+});
+
+app.post('/getQueLenght', (req,res) => {
+    res.send("" + people.length);
 });
 
 app.listen(port, hostname, () => {
