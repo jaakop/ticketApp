@@ -3,12 +3,12 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Page</title>
+  <title>Waiting in cue</title>
   <link rel="stylesheet" href="/public/mainstyle.css">
 </head>
 
 <body>
-  <p>Your place in the cue is <span id="cue"></span></p>
+  <p>Your place in the queue is <span id="cue"></span></p>
   <script>
     var cokie = getCookie("ree");
     getCueNumber();
@@ -20,6 +20,7 @@
         if (this.readyState == 4 && this.status == 200) {
           if (this.responseText == "redirect") {
             window.location.reload();
+            alert("An admin has seen your ticket and is coming to help!");
 
           } else {
             document.getElementById("cue").innerHTML = this.responseText;

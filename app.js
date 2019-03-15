@@ -23,13 +23,14 @@ app.get('/', (req, res) => {
         var iscookie = false;
         for (var i = 0; i < people.length; i++) {
             if (cookies == people[i]) {
-                res.sendFile(__dirname + "/public/cue.html");
+                res.sendFile(path.join(__dirname + "/public/cue.html"));
                 iscookie = true;
                 break;
             }
         }
         if (!iscookie) {
             res.sendFile(path.join(__dirname + '/public/index.html'));
+            res.clearCookie("ree");
         }
     }
     else {
@@ -37,8 +38,12 @@ app.get('/', (req, res) => {
     }
 });
 
+app.get('/admin', (req, res) => {
+    res.sendFile(path.join(__dirname + "/public/admin.html"));
+});
+
 app.get('/public/:item', (req, res) => {
-res.sendFile(__dirname + "/public/" + req.params.item);
+    res.sendFile(__dirname + "/public/" + req.params.item);
 });
 
 app.post('/', (req, res) => {
@@ -61,8 +66,21 @@ app.post('/cue', (req, res) => {
     }
     if (response > 0)
         res.send(response.toString());
-    else
+    else {
+        res.clearCookie("ree");
         res.send("redirect");
+    }
+});
+
+app.post('/admin', (req, res) => {
+    if (people.length > 0)
+        res.send(people.shift());
+    else
+        res.send("No tickets found");
+});
+
+app.post('/getQueLenght', (req, res) => {
+    res.send("" + people.length);
 });
 
 app.listen(port, hostname, () => {
@@ -71,7 +89,7 @@ app.listen(port, hostname, () => {
     keypress(process.stdin);
 
     process.stdin.on('keypress', function (ch, key) {
-        if (key.name == "c" && key.ctrl == true) {
+        if (key && key.name == "c" && key.ctrl == true) {
             process.exit(0);
         }
         if (people.length > 0) {
