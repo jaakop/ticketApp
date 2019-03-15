@@ -7,9 +7,9 @@ const keypress = require('keypress');
 const config = require('./Config.json');
 
 const app = express();
-const port = 3000;
+const port = config.port;
 //const hostname = '172.19.144.204';
-const hostname = 'localhost';
+const hostname = config.host;
 
 var people = [];
 
