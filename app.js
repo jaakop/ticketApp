@@ -68,14 +68,13 @@ app.listen(port, hostname, () => {
     keypress(process.stdin);
 
     process.stdin.on('keypress', function (ch, key) {
+        if (key.name == "c" && key.ctrl == true) {
+            process.exit(0);
+        }
         if (people.length > 0) {
             console.log(people.shift() + " needs help!");
         } else {
             console.log("Nobody needs your help :c");
-        }
-        
-        if (key.name == "c" && key.ctrl == true) {
-            process.exit(0);
         }
     });
 
