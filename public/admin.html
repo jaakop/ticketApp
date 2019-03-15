@@ -23,7 +23,7 @@
                     document.getElementById("name").innerHTML = this.responseText;
                 }
             };
-            xhttp.open("POST", "admin", true);
+            xhttp.open("POST", "/admin", true);
             xhttp.send();
         }
         function GetQueueLenght() {
@@ -33,7 +33,7 @@
                     document.getElementById("queue").innerHTML = this.responseText;
                 }
             };
-            xhttp.open("POST", "getQueLenght", true);
+            xhttp.open("POST", "/admin/getQueLenght", true);
             xhttp.send();
         }
     </script>
