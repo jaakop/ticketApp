@@ -30,6 +30,7 @@ app.get('/', (req, res) => {
         }
         if (!iscookie) {
             res.sendFile(path.join(__dirname + '/public/index.html'));
+            res.clearCookie("ree");
         }
     }
     else {
@@ -61,8 +62,10 @@ app.post('/cue', (req, res) => {
     }
     if (response > 0)
         res.send(response.toString());
-    else
+    else{
+        res.clearCookie("ree");
         res.send("redirect");
+    }
 });
 
 app.listen(port, hostname, () => {
