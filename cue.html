@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Page</title>
+</head>
+<body>
+    <p>Your place in the cue is <span id="cue"></span></p>
+    <script>
+    var cokie = getCookie("ree");
+    //var loop = setInterval(getCueNumber(), 1000);
+    getCueNumber();
+    function getCueNumber() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("cue").innerHTML = this.responseText;
+        }
+    };
+    xhttp.open("POST", "./cue", false);
+    xhttp.setRequestHeader("cue", cokie);
+    xhttp.send();
+
+    
+    }
+
+    function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i <ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+    </script>
+</body>
+</html>
