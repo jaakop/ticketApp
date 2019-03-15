@@ -30,6 +30,7 @@ app.get('/', (req, res) => {
         }
         if (!iscookie) {
             res.sendFile(path.join(__dirname + '/public/index.html'));
+            res.clearCookie("ree");
         }
     }
     else {
@@ -61,8 +62,10 @@ app.post('/cue', (req, res) => {
     }
     if (response > 0)
         res.send(response.toString());
-    else
+    else{
+        res.clearCookie("ree");
         res.send("redirect");
+    }
 });
 
 app.listen(port, hostname, () => {
@@ -71,7 +74,7 @@ app.listen(port, hostname, () => {
     keypress(process.stdin);
 
     process.stdin.on('keypress', function (ch, key) {
-        if (key.name == "c" && key.ctrl == true) {
+        if (key && key.name == "c" && key.ctrl == true) {
             process.exit(0);
         }
         if (people.length > 0) {
