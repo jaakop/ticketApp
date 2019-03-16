@@ -8,6 +8,7 @@ border-radius: 10px;
     border-radius: 50px;
     height: 50px;
     width: 100px;
-    background-color: gray;
+    background-color: blue;
+    border-color: blue;
     color: white;
 }
