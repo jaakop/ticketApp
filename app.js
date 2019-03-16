@@ -50,8 +50,12 @@ app.post('/', (req, res) => {
     var cookies = req.cookies.ree;
     if (req.body.name.length < 10) {
         console.log("A new person needs your help!");
-        people.push(req.body.name);
-        res.cookie('ree', req.body.name);
+        if (req.body.discription != null) {
+            people.push({"name":req.body.name,"discription": req.body.discription});
+        }else{
+            people.push({"name":req.body.name});
+        }
+        res.cookie('ree', "test");
     }
     res.redirect('./');
 });
@@ -93,7 +97,12 @@ app.listen(port, hostname, () => {
             process.exit(0);
         }
         if (people.length > 0) {
-            console.log(people.shift() + " needs help!");
+            var person = people.shift();
+            if (person.discription != null) {
+                console.log(person.name + " needs help! " + "discription: " + person.discription);
+            } else {
+                console.log(person.name + " needs help!");
+            }
         } else {
             console.log("Nobody needs your help :c");
         }
