@@ -10,7 +10,7 @@ router.post('/', (req, res) => {
     if (people.length > 0)
         res.send(people.shift());
     else
-        res.send("No tickets found");
+        res.send({'name':'No tickets found','discription': '-'});
 });
 
 router.post('/getQueLenght', (req, res) => {
