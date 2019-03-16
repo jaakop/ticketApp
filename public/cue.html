@@ -12,7 +12,20 @@
   <script>
     var cokie = getCookie("ree");
     getCueNumber();
-    var loop = setInterval(getCueNumber, 500);
+    var updateSpeed = 500;
+    document.addEventListener('visibilitychange', function(){
+        if(document.hidden)
+            updateSpeed = 2000;
+        else
+            updateSpeed = 500;
+    });
+    window.onfocus = function(){
+        updateSpeed = 500
+    };
+    window.onblur = function(){
+        updateSpeed = 2000;
+    };
+
 
     function getCueNumber() {
       var xhttp = new XMLHttpRequest();
@@ -30,7 +43,7 @@
       xhttp.open("POST", "/cue", true);
       xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
       xhttp.send("name=" + cokie);
-
+      setTimeout(getCueNumber, updateSpeed);
     }
 
     function getCookie(cname) {
