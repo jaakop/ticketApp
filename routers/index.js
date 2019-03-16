@@ -26,7 +26,6 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     var cookies = req.cookies.ree;
     if (req.body.name.length < 10) {
-        console.log("A new person needs your help!");
         people.push(req.body.name);
         res.cookie('ree', req.body.name);
     }
