@@ -1,8 +1,6 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const path = require('path');
-const keypress = require('keypress');
 
 const config = require('./Config.json');
 
@@ -27,5 +25,5 @@ app.get('/public/:item', (req, res) => {
 
 
 app.listen(port, hostname, () => {
-    console.log('Express app is listening at ' + hostname + ':' + port + '!');
+    console.log('The ticket app is listening at ' + hostname + ':' + port + '!');
 });

@@ -5,6 +5,7 @@ body{
     border-radius: 50px;
     height: 75px;
     width: 200px;
-    background-color: gray;
+    background-color: blue;
+    border-color: blue;
     color: white;
 }

@@ -21,7 +21,20 @@
 
     <script>
         GetQueueLenght();
-        setInterval(GetQueueLenght, 500);
+        var updateSpeed = 500;
+        document.addEventListener('visibilitychange', function(){
+            if(document.hidden)
+                updateSpeed = 2000;
+            else
+                updateSpeed = 500;
+        });
+        window.onfocus = function(){
+            updateSpeed = 500;
+
+        };
+        window.onblur = function(){
+            updateSpeed = 2000;
+        };
 
         function getNextTicket() {
             var xhttp = new XMLHttpRequest();
@@ -52,6 +65,7 @@
             };
             xhttp.open("POST", "/admin/getQueLenght", true);
             xhttp.send();
+            setTimeout(GetQueueLenght, updateSpeed);
         }
     </script>
 </body>
