@@ -28,26 +28,4 @@ app.get('/public/:item', (req, res) => {
 
 app.listen(port, hostname, () => {
     console.log('Express app is listening at ' + hostname + ':' + port + '!');
-
-    keypress(process.stdin);
-
-    process.stdin.on('keypress', function (ch, key) {
-        if (key && key.name == "c" && key.ctrl == true) {
-            process.exit(0);
-        }
-        if (people.length > 0) {
-            var person = people.shift();
-            if (person.discription != null) {
-                console.log(person.name + " needs help! " + "discription: " + person.discription);
-            } else {
-                console.log(person.name + " needs help!");
-            }
-        } else {
-            console.log("Nobody needs your help :c");
-        }
-    });
-
-    process.stdin.setRawMode(true);
-    process.stdin.resume();
-
 });
