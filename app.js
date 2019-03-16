@@ -1,8 +1,6 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const path = require('path');
-const keypress = require('keypress');
 
 const config = require('./Config.json');
 
@@ -27,22 +25,5 @@ app.get('/public/:item', (req, res) => {
 
 
 app.listen(port, hostname, () => {
-    console.log('Express app is listening at ' + hostname + ':' + port + '!');
-
-    keypress(process.stdin);
-
-    process.stdin.on('keypress', function (ch, key) {
-        if (key && key.name == "c" && key.ctrl == true) {
-            process.exit(0);
-        }
-        if (people.length > 0) {
-            console.log(people.shift() + " needs help!");
-        } else {
-            console.log("Nobody needs your help :c");
-        }
-    });
-
-    process.stdin.setRawMode(true);
-    process.stdin.resume();
-
+    console.log('The ticket app is listening at ' + hostname + ':' + port + '!');
 });
