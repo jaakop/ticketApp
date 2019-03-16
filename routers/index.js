@@ -26,8 +26,13 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     var cookies = req.cookies.ree;
     if (req.body.name.length < 10) {
-        people.push(req.body.name);
-        res.cookie('ree', req.body.name);
+        console.log("A new person needs your help!");
+        if (req.body.discription != null) {
+            people.push({"name":req.body.name,"discription": req.body.discription});
+        }else{
+            people.push({"name":req.body.name});
+        }
+        res.cookie('ree', "test");
     }
     res.redirect('./');
 });

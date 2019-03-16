@@ -9,7 +9,14 @@
 
 <body>
     <p>Current queue lenght: <span id="queue"></span></p>
-    <h2 id="name"> </h2>
+    <div id="namediv" style="visibility: hidden">
+        <P>Name</P>
+        <h2 id="name"> </h2>
+    </div>
+    <div id="discriptiondiv" style="visibility: hidden">
+        <P>Discription</P>
+        <h2 id="discription"> </h2>
+    </div>
     <button class="button" type="submit" onclick="getNextTicket()">Get the next ticket</button>
 
     <script>
@@ -33,7 +40,17 @@
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                    document.getElementById("name").innerHTML = this.responseText;
+                    var person = JSON.parse(this.responseText);
+                    if (person.discription != null) {
+                        document.getElementById("name").innerHTML = person.name;
+                        document.getElementById("discription").innerHTML = person.discription;
+
+                        document.getElementById("namediv").style.visibility = "visible";
+                        document.getElementById("discriptiondiv").style.visibility = "visible";
+                    } else{
+                        document.getElementById("name").innerHTML = person.name;
+                        document.getElementById("namediv").style.visibility = "visible";
+                    }
                 }
             };
             xhttp.open("POST", "/admin", true);
