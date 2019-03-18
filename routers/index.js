@@ -16,7 +16,6 @@ router.get('/', (req, res) => {
         if (!iscookie) {
             res.sendFile(path.resolve(__dirname + './../public/index.html'));
             res.clearCookie("ree");
-            console.log("test");
         }
     }
     else {
@@ -29,6 +28,14 @@ router.post('/', (req, res) => {
     if (req.body.name.length < 10) {
         if (req.body.discription != null) {
             people.push({"name":req.body.name,"discription": req.body.discription});
+
+            var connection = require('../database/connection.js');
+            var sql = 'INSERT INTO tickets (name, description) VALUES (' + "'" + req.body.name + "'" + ',' + "'" + req.body.discription + "'" + ')';
+            connection.query(sql, (err, result) => {
+                if(err) throw err;
+                console.log("Result of the query: " + result);
+            });
+
         }else{
             people.push({"name":req.body.name});
         }

@@ -9,7 +9,22 @@ const port = config.port;
 //const hostname = '172.19.144.204';
 const hostname = config.host;
 
+var connection = require('./database/connection');
+
 global.people = [];
+
+
+var ticketPromise = new Promise((resolve, reject) => {
+    
+    connection.query('SELECT * FROM tickets', (err, result)  =>{
+            if (err) reject(err);
+            else resolve(JSON.parse(JSON.stringify(result)));
+    });
+});
+
+ticketPromise.then((result) => {
+    console.log(result[0].name);
+});
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
