@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 
+
 router.get('/', (req, res) => {
     res.sendFile(path.resolve(__dirname + './../public/admin.html'));
 });
@@ -17,6 +18,7 @@ router.post('/', (req, res) => {
                     if (error) reject(error);
                     resolve(JSON.stringify(result));
                 });
+                people.shift();
             } else {
                 resolve(JSON.stringify([{ "id": 0, "name": "No tickets was found", "description": " " }]));
             }
