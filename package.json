@@ -12,6 +12,7 @@
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.4",
     "express": "^4.16.4",
-    "keypress": "^0.2.1"
+    "keypress": "^0.2.1",
+    "mysql": "^2.16.0"
   }
 }

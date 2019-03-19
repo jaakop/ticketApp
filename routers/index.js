@@ -3,7 +3,7 @@ const router = express.Router();
 const path = require('path');
 
 router.get('/', (req, res) => {
-    var cookies = req.cookies.ree;
+    var cookies = req.cookies.ticketAppCookie;
     if (cookies != null) {
         var iscookie = false;
         for (var i = 0; i < people.length; i++) {
@@ -15,8 +15,7 @@ router.get('/', (req, res) => {
         }
         if (!iscookie) {
             res.sendFile(path.resolve(__dirname + './../public/index.html'));
-            res.clearCookie("ree");
-            console.log("test");
+            res.clearCookie("ticketAppCookie");
         }
     }
     else {
@@ -25,14 +24,19 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    var cookies = req.cookies.ree;
+    var cookies = req.cookies.ticketAppCookie;
     if (req.body.name.length < 10) {
-        if (req.body.discription != null) {
-            people.push({"name":req.body.name,"discription": req.body.discription});
-        }else{
-            people.push({"name":req.body.name});
+        if (req.body.description != null) {
+            people.push({ "name": req.body.name, "description": req.body.description });
+            var connection = require('../database/connection.js');
+            var sql = 'INSERT INTO tickets (name, description) VALUES (' + "'" + req.body.name + "'" + ',' + "'" + req.body.description + "'" + ')';
+            connection.query(sql, (err, result) => {
+                if (err) throw err;
+            });
+        } else {
+            people.push({ "name": req.body.name });
         }
-        res.cookie('ree', req.body.name);
+        res.cookie('ticketAppCookie', req.body.name);
     }
     res.redirect('./');
 });
@@ -48,7 +52,7 @@ router.post('/cue', (req, res) => {
     if (response > 0)
         res.send(response.toString());
     else {
-        res.clearCookie("ree");
+        res.clearCookie("ticketAppCookie");
         res.send("redirect");
     }
 });
