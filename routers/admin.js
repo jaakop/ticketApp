@@ -12,13 +12,13 @@ router.post('/', (req, res) => {
     var query = new Promise((resolve, reject) => {
         connection.query(sql, (err, result) => {
             if (err) reject(err);
-            if(JSON.parse(JSON.stringify(result))[0] != null){
-            connection.query("DELETE FROM tickets WHERE id=" + JSON.parse(JSON.stringify(result))[0].id, (error) =>{
-                if(error) reject(error);
-                resolve(JSON.stringify(result));
-            });
-            }else{
-                resolve(JSON.stringify([{"id":0,"name":"No tickets was found", "description":" "}]));
+            if (JSON.parse(JSON.stringify(result))[0] != null) {
+                connection.query("DELETE FROM tickets WHERE id=" + JSON.parse(JSON.stringify(result))[0].id, (error) => {
+                    if (error) reject(error);
+                    resolve(JSON.stringify(result));
+                });
+            } else {
+                resolve(JSON.stringify([{ "id": 0, "name": "No tickets was found", "description": " " }]));
             }
         });
     });
