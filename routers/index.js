@@ -26,11 +26,10 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     var cookies = req.cookies.ree;
     if (req.body.name.length < 10) {
-        if (req.body.discription != null) {
-            people.push({"name":req.body.name,"discription": req.body.discription});
-
+        if (req.body.description != null) {
+            people.push({"name":req.body.name,"description": req.body.description});
             var connection = require('../database/connection.js');
-            var sql = 'INSERT INTO tickets (name, description) VALUES (' + "'" + req.body.name + "'" + ',' + "'" + req.body.discription + "'" + ')';
+            var sql = 'INSERT INTO tickets (name, description) VALUES (' + "'" + req.body.name + "'" + ',' + "'" + req.body.description + "'" + ')';
             connection.query(sql, (err, result) => {
                 if(err) throw err;
                 console.log("Result of the query: " + result);
