@@ -13,9 +13,9 @@
         <P>Name</P>
         <h2 id="name"> </h2>
     </div>
-    <div id="discriptiondiv" style="visibility: hidden">
-        <P>Discription</P>
-        <h2 id="discription"> </h2>
+    <div id="descriptiondiv" style="visibility: hidden">
+        <P>description</P>
+        <h2 id="description"> </h2>
     </div>
     <button class="button" type="submit" onclick="getNextTicket()">Get the next ticket</button>
 
@@ -44,10 +44,10 @@
                     console.log(person.name);
                     if (person.description != null) {
                         document.getElementById("name").innerHTML = person.name;
-                        document.getElementById("discription").innerHTML = person.description;
+                        document.getElementById("description").innerHTML = person.description;
 
                         document.getElementById("namediv").style.visibility = "visible";
-                        document.getElementById("discriptiondiv").style.visibility = "visible";
+                        document.getElementById("descriptiondiv").style.visibility = "visible";
                     } else{
                         document.getElementById("name").innerHTML = person.name;
                         document.getElementById("namediv").style.visibility = "visible";
