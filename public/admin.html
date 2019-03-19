@@ -40,10 +40,11 @@
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                    var person = JSON.parse(this.responseText);
-                    if (person.discription != null) {
+                    var person = JSON.parse(this.responseText)[0];
+                    console.log(person.name);
+                    if (person.description != null) {
                         document.getElementById("name").innerHTML = person.name;
-                        document.getElementById("discription").innerHTML = person.discription;
+                        document.getElementById("discription").innerHTML = person.description;
 
                         document.getElementById("namediv").style.visibility = "visible";
                         document.getElementById("discriptiondiv").style.visibility = "visible";
