@@ -10,20 +10,23 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     var connection = require('../database/connection');
     var sql = "SELECT * FROM tickets LIMIT 1";
+
     var query = new Promise((resolve, reject) => {
         connection.query(sql, (err, result) => {
             if (err) reject(err);
+
             if (JSON.parse(JSON.stringify(result))[0] != null) {
                 connection.query("DELETE FROM tickets WHERE id=" + JSON.parse(JSON.stringify(result))[0].id, (error) => {
                     if (error) reject(error);
                     resolve(JSON.stringify(result));
                 });
-                people.shift();
-            } else {
+            }
+            else {
                 resolve(JSON.stringify([{ "id": 0, "name": "No tickets was found", "description": " " }]));
             }
         });
     });
+
     query.then((result) => {
         res.send(result);
     });
@@ -31,7 +34,18 @@ router.post('/', (req, res) => {
 });
 
 router.post('/getQueLenght', (req, res) => {
-    res.send("" + people.length);
+    var connection = require('../database/connection');
+    var sql = "SELECT COUNT(id) AS PeopleCount FROM tickets";
+
+    var query = new Promise((resolve, reject) => {
+        connection.query(sql, (err, result) => {
+            if (err) reject(err);
+            resolve( JSON.parse(JSON.stringify(result))[0]);
+        });
+    });
+    query.then((result) => {
+        res.send(result.PeopleCount.toString());
+    });
 });
 
 module.exports = router;
