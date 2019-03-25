@@ -15,6 +15,7 @@ var connection = require("./database/connection");
 var query = new Promise((resolve, reject) =>{
     connection.query("SELECT name, description FROM tickets", (err, result)=>{
     if(err) reject(err);
+    console.log(JSON.stringify(result));
     resolve(JSON.parse(JSON.stringify(result)));
     });
 });

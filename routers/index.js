@@ -31,6 +31,7 @@ router.post('/', (req, res) => {
             var connection = require('../database/connection.js');
             var sql = 'INSERT INTO tickets (name, description) VALUES (' + connection.escape(req.body.name) + ',' + connection.escape(req.body.description) + ')';
             connection.query(sql, (err, result) => {
+                console.log(JSON.stringify(result));
                 if (err) throw err;
             });
         } else {
