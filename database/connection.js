@@ -1,10 +1,11 @@
 const mysql = require('mysql');
+const sqlconfig = require('../mysql.json')
 
 var connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "ticketdb"
+    host: sqlconfig.IP,
+    user: sqlconfig.username,
+    password: sqlconfig.password,
+    database: sqlconfig.DB
 });
 connection.connect((err) => {
     if(err) throw err;
