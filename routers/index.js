@@ -30,7 +30,7 @@ router.post('/', (req, res) => {
     if (req.body.name.length < 10 || req.body.name == null) {
         if (req.body.description != null) {
             var connection = require('../database/connection.js');
-            var sql = 'INSERT INTO tickets (name, description) VALUES (' + connection.escape(req.body.name) + ',' + connection.escape(req.body.description) + ')';
+            var sql = 'INSERT INTO tickets (name, description) VALUES (' + connection.escape(req.body.name) + ',' + connection.escape(req.body.description.replace("<","&lt;".replace(">","&gt;"))) + ')';
             connection.query(sql, (err, result) => {
                 console.log(JSON.stringify(result));
                 if (err) throw err;
