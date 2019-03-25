@@ -4,38 +4,37 @@ const path = require('path');
 
 router.get('/', (req, res) => {
     var cookies = req.cookies.ticketAppCookie;
-    if (cookies != null) {
-        var iscookie = false;
-        for (var i = 0; i < people.length; i++) {
-            if (cookies == people[i].name) {
+    async function Respond() {
+        var getCueNumber = require('../database/cueNumber');
+        if (cookies != null) {
+            var iscookie = false;
+            var cueNumber = await getCueNumber(cookies);
+            if (cueNumber > 0) {
                 res.sendFile(path.resolve(__dirname + "./../public/cue.html"));
                 iscookie = true;
-                break;
+            }
+
+            else if (!iscookie) {
+                res.sendFile(path.resolve(__dirname + './../public/index.html'));
+                res.clearCookie("ticketAppCookie");
             }
         }
-        if (!iscookie) {
+        else {
             res.sendFile(path.resolve(__dirname + './../public/index.html'));
-            res.clearCookie("ticketAppCookie");
         }
     }
-    else {
-        res.sendFile(path.resolve(__dirname + './../public/index.html'));
-    }
+    Respond();
 });
 
 router.post('/', (req, res) => {
-    var cookies = req.cookies.ticketAppCookie;
     if (req.body.name.length < 10 || req.body.name == null) {
         if (req.body.description != null) {
-            people.push({ "name": req.body.name, "description": req.body.description });
             var connection = require('../database/connection.js');
             var sql = 'INSERT INTO tickets (name, description) VALUES (' + connection.escape(req.body.name) + ',' + connection.escape(req.body.description) + ')';
             connection.query(sql, (err, result) => {
                 console.log(JSON.stringify(result));
                 if (err) throw err;
             });
-        } else {
-            people.push({ "name": req.body.name });
         }
         res.cookie('ticketAppCookie', req.body.name);
     }
@@ -43,19 +42,17 @@ router.post('/', (req, res) => {
 });
 
 router.post('/cue', (req, res) => {
-    var response = 0;
-    for (var i = 0; i < people.length; i++) {
-        if (req.body.name == people[i].name) {
-            response = i + 1;
-            break;
+    async function GetCueNumber() {
+        var getCue = require('../database/cueNumber');
+        var response = await getCue(req.body.name);
+        if (response > 0)
+            res.send(response.toString());
+        else {
+            res.clearCookie("ticketAppCookie");
+            res.send("redirect");
         }
     }
-    if (response > 0)
-        res.send(response.toString());
-    else {
-        res.clearCookie("ticketAppCookie");
-        res.send("redirect");
-    }
+    GetCueNumber();
 });
 
 module.exports = router;
