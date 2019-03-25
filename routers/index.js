@@ -27,11 +27,25 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    if (req.body.name.length < 10 || req.body.name == null) {
+
+    var namebool = false;
+
+    if (req.body.name == null) namebool = true;
+    else if (req.body.name.length < 10) namebool = true;
+
+    if (namebool) {
         if (req.body.description != null) {
+
+            var name = req.body.name;
+            var description = req.body.description;
+
+            description = description.replace(/</g,"&lt;");
+            description = description.replace(/>/g,"&gt;");
+
             var connection = require('../database/connection.js');
-            var sql = 'INSERT INTO tickets (name, description) VALUES (' + connection.escape(req.body.name) + ',' + connection.escape(req.body.description) + ')';
+            var sql = 'INSERT INTO tickets (name, description) VALUES (' + connection.escape(name) + ',' + connection.escape(description) + ')';
             connection.query(sql, (err, result) => {
+                console.log(JSON.stringify(result));
                 if (err) throw err;
             });
         }
