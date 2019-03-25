@@ -14,6 +14,7 @@ app.use(cookieParser());
 
 app.use('/', require('./routers/index'));
 app.use('/admin', require('./routers/admin'));
+app.use('/solveticket', require('./routers/solve'));
 
 
 app.get('/public/:item', (req, res) => {
