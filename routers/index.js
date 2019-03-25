@@ -42,10 +42,8 @@ router.post('/', (req, res) => {
             discription = discription.replace(/</g,"&lt;");
             discription = discription.replace(/>/g,"&gt;");
 
-            console.log(discription);
-
             var connection = require('../database/connection.js');
-            var sql = 'INSERT INTO tickets (name, description) VALUES (' + connection.escape(req.body.name) + ',' + connection.escape(discription) + ')';
+            var sql = 'INSERT INTO tickets (name, description) VALUES (' + connection.escape(name) + ',' + connection.escape(discription) + ')';
             connection.query(sql, (err, result) => {
                 console.log(JSON.stringify(result));
                 if (err) throw err;
