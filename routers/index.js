@@ -27,10 +27,25 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    if (req.body.name.length < 10 || req.body.name == null) {
+
+    var namebool = false;
+
+    if (req.body.name == null) namebool = true;
+    else if (req.body.name.length < 10) namebool = true;
+
+    if (namebool) {
         if (req.body.description != null) {
+
+            var name = req.body.name;
+            var discription = req.body.description;
+
+            discription = discription.replace("<","&lt;");
+            discription = discription.replace(">","&gt;");
+
+            console.log(discription);
+
             var connection = require('../database/connection.js');
-            var sql = 'INSERT INTO tickets (name, description) VALUES (' + connection.escape(req.body.name) + ',' + connection.escape(req.body.description.replace("<","&lt;").replace(">","&gt;")) + ')';
+            var sql = 'INSERT INTO tickets (name, description) VALUES (' + connection.escape(req.body.name) + ',' + connection.escape() + ')';
             connection.query(sql, (err, result) => {
                 console.log(JSON.stringify(result));
                 if (err) throw err;
