@@ -29,7 +29,7 @@ router.post('/', (req, res) => {
         if (req.body.description != null) {
             people.push({ "name": req.body.name, "description": req.body.description });
             var connection = require('../database/connection.js');
-            var sql = 'INSERT INTO tickets (name, description) VALUES (' + "'" + req.body.name + "'" + ',' + "'" + req.body.description + "'" + ')';
+            var sql = 'INSERT INTO tickets (name, description) VALUES (' + "'" + connection.escape(req.body.name) + "'" + ',' + "'" + connection.escape(req.body.description) + "'" + ')';
             connection.query(sql, (err, result) => {
                 if (err) throw err;
             });
