@@ -39,8 +39,8 @@ router.post('/', (req, res) => {
             var name = req.body.name;
             var discription = req.body.description;
 
-            discription = discription.replace("/</","&lt;");
-            discription = discription.replace("/>/","&gt;");
+            discription = discription.replace("/</g","&lt;");
+            discription = discription.replace("/>/g","&gt;");
 
             console.log(discription);
 
