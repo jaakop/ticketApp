@@ -25,7 +25,7 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
     var cookies = req.cookies.ticketAppCookie;
-    if (req.body.name.length < 10) {
+    if (req.body.name.length < 10 || req.body.name == null) {
         if (req.body.description != null) {
             people.push({ "name": req.body.name, "description": req.body.description });
             var connection = require('../database/connection.js');
