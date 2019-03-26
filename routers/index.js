@@ -5,22 +5,26 @@ const path = require('path');
 router.get('/', (req, res) => {
     var cookies = req.cookies.ticketAppCookie;
     async function Respond() {
+        console.time("TicketResponce")
         var getCueNumber = require('../database/cueNumber');
         if (cookies != null) {
             var iscookie = false;
             var cueNumber = await getCueNumber(cookies);
             if (cueNumber > 0) {
                 res.sendFile(path.resolve(__dirname + "./../public/cue.html"));
+                console.timeEnd("TicketResponce");
                 iscookie = true;
             }
 
             else if (!iscookie) {
                 res.sendFile(path.resolve(__dirname + './../public/index.html'));
+                console.timeEnd("TicketResponce");
                 res.clearCookie("ticketAppCookie");
             }
         }
         else {
             res.sendFile(path.resolve(__dirname + './../public/index.html'));
+            console.timeEnd("TicketResponce");
         }
     }
     Respond();
