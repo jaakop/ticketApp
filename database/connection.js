@@ -9,7 +9,6 @@ var connection = mysql.createConnection({
 });
 connection.connect((err) => {
     if(err) throw err;
-    console.log("Connection ot the database established");
 });
 
 module.exports = connection;

@@ -2,13 +2,28 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 
+async function getCueNumber(name) {
+    var sql = "SELECT name FROM tickets";
+    var connection = require('../database/connection');
+    return new Promise((resolve, reject) => {
+        connection.query(sql, (err, result) => {
+            if (err) reject(err);
+            for (var i = 0; i < result.length; i++) {
+                if (result[i].name == name) {
+                    resolve(i + 1)
+                }
+            }
+            resolve(0);
+        });
+    });
+}
+
 router.get('/', (req, res) => {
-    var cookies = req.cookies.ticketAppCookie;
     async function Respond() {
-        var getCueNumber = require('../database/cueNumber');
+        var cookies = req.cookies.ticketAppCookie;
+        var cueNumber = await getCueNumber(cookies);
         if (cookies != null) {
             var iscookie = false;
-            var cueNumber = await getCueNumber(cookies);
             if (cueNumber > 0) {
                 res.sendFile(path.resolve(__dirname + "./../public/cue.html"));
                 iscookie = true;
@@ -27,25 +42,18 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-
     var namebool = false;
 
-    if (req.body.name == null) namebool = true;
-    else if (req.body.name.length < 10) namebool = true;
-
-    if (namebool) {
-        if (req.body.description != null) {
+    if (req.body.name.length < 10 && req.body.name != '') {
+        if (req.body.description != '') {
 
             var name = req.body.name;
             var description = req.body.description;
-
-            description = description.replace(/</g,"&lt;");
-            description = description.replace(/>/g,"&gt;");
-
+            description = description.replace(/</g, "&lt;");
+            description = description.replace(/>/g, "&gt;");
             var connection = require('../database/connection.js');
             var sql = 'INSERT INTO tickets (name, description) VALUES (' + connection.escape(name) + ',' + connection.escape(description) + ')';
             connection.query(sql, (err, result) => {
-                console.log(JSON.stringify(result));
                 if (err) throw err;
             });
         }
@@ -55,9 +63,8 @@ router.post('/', (req, res) => {
 });
 
 router.post('/cue', (req, res) => {
-    async function GetCueNumber() {
-        var getCue = require('../database/cueNumber');
-        var response = await getCue(req.body.name);
+    async function Respond() {
+        var response = await getCueNumber(req.body.name);
         if (response > 0)
             res.send(response.toString());
         else {
@@ -65,7 +72,7 @@ router.post('/cue', (req, res) => {
             res.send("redirect");
         }
     }
-    GetCueNumber();
+    Respond();
 });
 
 module.exports = router;
