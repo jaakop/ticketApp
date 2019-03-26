@@ -32,6 +32,8 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
 
+    console.time("TicketInsert");
+
     var namebool = false;
 
     if (req.body.name == null) namebool = true;
@@ -48,6 +50,7 @@ router.post('/', (req, res) => {
 
             var connection = require('../database/connection.js');
             var sql = 'INSERT INTO tickets (name, description) VALUES (' + connection.escape(name) + ',' + connection.escape(description) + ')';
+            console.timeEnd("TicketInsert");
             connection.query(sql, (err, result) => {
                 console.log(JSON.stringify(result));
                 if (err) throw err;
@@ -60,13 +63,17 @@ router.post('/', (req, res) => {
 
 router.post('/cue', (req, res) => {
     async function GetCueNumber() {
+        console.time("GetCue");
         var getCue = require('../database/cueNumber');
         var response = await getCue(req.body.name);
-        if (response > 0)
+        if (response > 0){
             res.send(response.toString());
+            console.timeEnd("GetCue");
+        }
         else {
             res.clearCookie("ticketAppCookie");
             res.send("redirect");
+            console.timeEnd("GetCue");
         }
     }
     GetCueNumber();
