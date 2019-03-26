@@ -45,13 +45,15 @@ router.post('/', (req, res) => {
             var name = req.body.name;
             var description = req.body.description;
 
+            console.time("Parser");
             description = description.replace(/</g,"&lt;");
             description = description.replace(/>/g,"&gt;");
+            console.timeEnd("Parser");
 
             var connection = require('../database/connection.js');
             var sql = 'INSERT INTO tickets (name, description) VALUES (' + connection.escape(name) + ',' + connection.escape(description) + ')';
-            console.timeEnd("TicketInsert");
             connection.query(sql, (err, result) => {
+                console.timeEnd("TicketInsert");
                 console.log(JSON.stringify(result));
                 if (err) throw err;
             });
